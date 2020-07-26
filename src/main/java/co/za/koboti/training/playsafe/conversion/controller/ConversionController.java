@@ -28,12 +28,15 @@ public class ConversionController {
     @ApiOperation(value = "Given an input amount in Kelvin, return an output amount in Celsius ", response = float.class, tags = "ktoc")
     @GetMapping(value = "/ktoc/{kelvin}")
     public ResponseEntity<Float> convertKelvinToCelsius(@PathVariable("kelvin") float kelvin) {
+        logger.info("Converting {} Kelvin into Celsius", kelvin);
         return new ResponseEntity<>(conversionService.kelvinToCelsius(kelvin), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Given an input amount in Celsius, return an output amount in Kelvin ", response = float.class, tags = "ctok")
     @GetMapping(value = "/ctok/{celsius}")
     public ResponseEntity<Float> convertCelsiusToKelvin(@PathVariable("celsius") float celsius) {
+        logger.info("Converting {} Celsius into Kelvin.", celsius );
+
         return new ResponseEntity<>(conversionService.celsiusToKelvin(celsius), HttpStatus.OK);
     }
 
