@@ -1,6 +1,7 @@
 package co.za.koboti.training.playsafe.conversion.controller;
 
 import co.za.koboti.training.playsafe.conversion.service.ConversionService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +25,28 @@ public class ConversionController {
         this.conversionService = conversionService;
     }
 
+    @ApiOperation(value = "Given an input amount in Kelvin, return an output amount in Celsius ", response = float.class, tags = "ktoc")
     @GetMapping(value = "/ktoc/{kelvin}")
     public ResponseEntity<Float> convertKelvinToCelsius(@PathVariable("kelvin") float kelvin) {
         return new ResponseEntity<>(conversionService.kelvinToCelsius(kelvin), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Given an input amount in Celsius, return an output amount in Kelvin ", response = float.class, tags = "ctok")
     @GetMapping(value = "/ctok/{celsius}")
-    public ResponseEntity<String> convertCelsiusToKelvin(@PathVariable("celsius") float celsius) {
-        return new ResponseEntity<>(String.valueOf(conversionService.celsiusToKelvin(celsius)), HttpStatus.OK);
+    public ResponseEntity<Float> convertCelsiusToKelvin(@PathVariable("celsius") float celsius) {
+        return new ResponseEntity<>(conversionService.celsiusToKelvin(celsius), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Given an input amount in Miles, return an output amount in Kilometers.", response = float.class, tags = "mtok")
     @GetMapping(value = "/mtok/{miles}")
-    public ResponseEntity<String> convertMilesToKilometers(@PathVariable("miles") double miles) {
-        return new ResponseEntity<>(String.valueOf(conversionService.milesToKm(miles)), HttpStatus.OK);
+    public ResponseEntity<Double> convertMilesToKilometers(@PathVariable("miles") double miles) {
+        return new ResponseEntity<>(conversionService.milesToKm(miles), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Given an input amount in Kilometers, return an output amount in Miles.", response = float.class, tags = "ktom")
     @GetMapping(value = "/ktom/{km}")
-    public ResponseEntity<String> convertKilometersToMiles(@PathVariable("km") double km) {
-        return new ResponseEntity<>(String.valueOf(conversionService.kmToMiles(km)), HttpStatus.OK);
+    public ResponseEntity<Double> convertKilometersToMiles(@PathVariable("km") double km) {
+        return new ResponseEntity<>(conversionService.kmToMiles(km), HttpStatus.OK);
     }
 
 }

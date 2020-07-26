@@ -11,17 +11,17 @@ public class ConversionServiceImpl implements ConversionService {
     }
 
     @Override
-    public String celsiusToKelvin(float celsius) {
-        return String.valueOf(celsius + 273.15f);
+    public float celsiusToKelvin(float celsius) {
+        return celsius + 273.15f;
     }
 
     @Override
     public double milesToKm(double miles) {
-        return miles * 1.60934;
+        return miles * 1.6;
     }
 
     @Override
     public double kmToMiles(double kilometers) {
-        return kilometers * 0.621371;
+        return kilometers * 0.6;
     }
 }
