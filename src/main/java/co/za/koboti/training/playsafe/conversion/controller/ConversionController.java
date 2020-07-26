@@ -36,19 +36,22 @@ public class ConversionController {
     @GetMapping(value = "/ctok/{celsius}")
     public ResponseEntity<Float> convertCelsiusToKelvin(@PathVariable("celsius") float celsius) {
         logger.info("Converting {} Celsius into Kelvin.", celsius );
-
         return new ResponseEntity<>(conversionService.celsiusToKelvin(celsius), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Given an input amount in Miles, return an output amount in Kilometers.", response = float.class, tags = "mtok")
+    @ApiOperation(value = "Given an input amount in Miles, return an output amount in Kilometers.", response = double.class, tags = "mtok")
     @GetMapping(value = "/mtok/{miles}")
     public ResponseEntity<Double> convertMilesToKilometers(@PathVariable("miles") double miles) {
+        logger.info("Converting {} Miles into Kilometers.", miles );
         return new ResponseEntity<>(conversionService.milesToKm(miles), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Given an input amount in Kilometers, return an output amount in Miles.", response = float.class, tags = "ktom")
+    @ApiOperation(value = "Given an input amount in Kilometers, return an output amount in Miles.", response = double.class, tags = "ktom")
     @GetMapping(value = "/ktom/{km}")
     public ResponseEntity<Double> convertKilometersToMiles(@PathVariable("km") double km) {
+        logger.info("Converting {} Kilometers into Miles.", km );
+
+        conversionService.kmToMiles(km);
         return new ResponseEntity<>(conversionService.kmToMiles(km), HttpStatus.OK);
     }
 
