@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,16 +44,24 @@ public class ConversionController {
     @GetMapping(value = "/mtok/{miles}")
     public ResponseEntity<Double> convertMilesToKilometers(@PathVariable("miles") double miles) {
         logger.info("Converting {} Miles into Kilometers.", miles );
-        return new ResponseEntity<>(conversionService.milesToKm(miles), HttpStatus.OK);
+        StopWatch watch = new StopWatch();
+        watch.start();
+        double km = conversionService.milesToKm(miles);
+        watch.stop();
+        logger.info("Time taken to convert miles to km {}", watch.getTotalTimeMillis());
+        return new ResponseEntity<>(km, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Given an input amount in Kilometers, return an output amount in Miles.", response = double.class, tags = "ktom")
     @GetMapping(value = "/ktom/{km}")
     public ResponseEntity<Double> convertKilometersToMiles(@PathVariable("km") double km) {
         logger.info("Converting {} Kilometers into Miles.", km );
-
-        conversionService.kmToMiles(km);
-        return new ResponseEntity<>(conversionService.kmToMiles(km), HttpStatus.OK);
+        StopWatch watch = new StopWatch();
+        watch.start();
+        double miles = conversionService.kmToMiles(km);
+        watch.stop();
+        logger.info("Time taken to km to miles is {}", watch.getTotalTimeMillis());
+        return new ResponseEntity<>(miles, HttpStatus.OK);
     }
 
 }
