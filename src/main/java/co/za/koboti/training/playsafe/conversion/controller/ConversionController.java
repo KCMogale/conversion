@@ -30,25 +30,34 @@ public class ConversionController {
     @GetMapping(value = "/ktoc/{kelvin}")
     public ResponseEntity<Float> convertKelvinToCelsius(@PathVariable("kelvin") float kelvin) {
         logger.info("Converting {} Kelvin into Celsius", kelvin);
-        return new ResponseEntity<>(conversionService.kelvinToCelsius(kelvin), HttpStatus.OK);
+        StopWatch watcher = new StopWatch();
+        watcher.start();
+        float celsius = conversionService.kelvinToCelsius(kelvin);
+        logger.info("Time taken to convert kelvin into celsius is {} nanoseconds", watcher.getTotalTimeNanos());
+        return new ResponseEntity<>(celsius, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Given an input amount in Celsius, return an output amount in Kelvin ", response = float.class, tags = "ctok")
     @GetMapping(value = "/ctok/{celsius}")
     public ResponseEntity<Float> convertCelsiusToKelvin(@PathVariable("celsius") float celsius) {
         logger.info("Converting {} Celsius into Kelvin.", celsius );
-        return new ResponseEntity<>(conversionService.celsiusToKelvin(celsius), HttpStatus.OK);
+        StopWatch watcher = new StopWatch();
+        watcher.start();
+        float kelvin = conversionService.celsiusToKelvin(celsius);
+        watcher.stop();
+        logger.info("Time taken to convert celsius into kelvin is {} nanoseconds", watcher.getTotalTimeNanos());
+        return new ResponseEntity<>(kelvin, HttpStatus.OK);
     }
 
     @ApiOperation(value = "Given an input amount in Miles, return an output amount in Kilometers.", response = double.class, tags = "mtok")
     @GetMapping(value = "/mtok/{miles}")
     public ResponseEntity<Double> convertMilesToKilometers(@PathVariable("miles") double miles) {
         logger.info("Converting {} Miles into Kilometers.", miles );
-        StopWatch watch = new StopWatch();
-        watch.start();
+        StopWatch watcher = new StopWatch();
+        watcher.start();
         double km = conversionService.milesToKm(miles);
-        watch.stop();
-        logger.info("Time taken to convert miles to km {}", watch.getTotalTimeMillis());
+        watcher.stop();
+        logger.info("Time taken to convert miles into km is {} nanoseconds", watcher.getTotalTimeNanos());
         return new ResponseEntity<>(km, HttpStatus.OK);
     }
 
@@ -56,11 +65,11 @@ public class ConversionController {
     @GetMapping(value = "/ktom/{km}")
     public ResponseEntity<Double> convertKilometersToMiles(@PathVariable("km") double km) {
         logger.info("Converting {} Kilometers into Miles.", km );
-        StopWatch watch = new StopWatch();
-        watch.start();
+        StopWatch watcher = new StopWatch();
+        watcher.start();
         double miles = conversionService.kmToMiles(km);
-        watch.stop();
-        logger.info("Time taken to km to miles is {}", watch.getTotalTimeMillis());
+        watcher.stop();
+        logger.info("Time taken to convert km into miles is {} nanoseconds", watcher.getTotalTimeNanos());
         return new ResponseEntity<>(miles, HttpStatus.OK);
     }
 
