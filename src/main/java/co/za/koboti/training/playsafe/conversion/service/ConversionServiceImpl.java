@@ -11,8 +11,8 @@ public class ConversionServiceImpl implements ConversionService {
     }
 
     @Override
-    public float celsiusToKelvin(float celsius) {
-        return celsius + 273.15f;
+    public String celsiusToKelvin(float celsius) {
+        return String.valueOf(celsius + 273.15f);
     }
 
     @Override
